@@ -37,10 +37,10 @@ public class Commands implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String label, String[] args) {
 		if (args.length == 0) {
-			sender.sendMessage(Messages.PREFIX + " �aPlugin hecho por �aDcRubik�7.");
+			sender.sendMessage(Messages.PREFIX + " §aPlugin hecho por §aDcRubik§7.");
 		} else {
 			if (!(sender instanceof Player)) {
-				sender.sendMessage(Messages.PREFIX + " �cYou can't use commands from console!");	
+				sender.sendMessage(Messages.PREFIX + " §cYou can't use commands from console!");	
 				return false;
 			}
 			Player p = (Player) sender;
@@ -55,12 +55,12 @@ public class Commands implements CommandExecutor {
 						for (String argument : command.getArguments()) {
 							arguments = arguments + " " + argument;
 						}
-						p.sendMessage(Messages.PREFIX + " �7Invalid arguments! Use �a/gs " + command.getCommand() + arguments);
+						p.sendMessage(Messages.PREFIX + " §7Invalid arguments! Use §a/gs " + command.getCommand() + arguments);
 					}
 					return true;
 				}
 			}
-			sender.sendMessage(Messages.PREFIX + " �7Unknown command! Type �c/gs help�7 for help.");
+			sender.sendMessage(Messages.PREFIX + " §7Unknown command! Type §c/gs help§7 for help.");
 		}
 		return false;
 	}

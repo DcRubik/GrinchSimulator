@@ -16,7 +16,7 @@ public class ScoreboardLine {
 	private Scoreboard board;
 	
 	public ScoreboardLine(OfflinePlayer player, Scoreboard board, Objective obj, String name, int line, int score) {
-		String color = ChatColor.values()[line - 1] + "�r";
+		String color = ChatColor.values()[line - 1] + "§r";
 		team = board.registerNewTeam(color);
 		this.score = obj.getScore(color);
 		this.score.setScore(score);
@@ -35,7 +35,7 @@ public class ScoreboardLine {
 			this.name = name;
 			String prefix = name.length() >= 16 ? name.substring(0, 16) : name;
 			boolean colorMark = false;
-			if (prefix.length() > 0 && prefix.charAt(prefix.length()-1) == '�') {
+			if (prefix.length() > 0 && prefix.charAt(prefix.length()-1) == '§') {
 				prefix = prefix.substring(0, prefix.length() - 1);
 				colorMark = true;
 			}

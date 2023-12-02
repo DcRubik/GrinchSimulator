@@ -55,7 +55,7 @@ public class UpdateTask extends BukkitRunnable {
 				}
 				if (g.getState() == GameState.WAITING && g.getPlayers().size() < g.getMin()) {
 					for (Player p : g.getPlayers()) {
-						p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(Messages.BAR_PLAYERS.toString(p).replace("%min%", g.getMin() + "")));
+						//p.spigot().sendMessage(new TextComponent(Messages.BAR_PLAYERS.toString(p).replace("%min%", g.getMin() + "")));
 					}
 				}
 			}

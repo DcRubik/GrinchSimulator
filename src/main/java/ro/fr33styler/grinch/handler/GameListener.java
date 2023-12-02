@@ -5,9 +5,9 @@ import java.io.DataOutputStream;
 import java.util.Iterator;
 import java.util.List;
 
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -58,12 +58,12 @@ public class GameListener implements Listener {
 		GameSetup setup = main.getSetups().get(p);
 		if (setup != null && setup.getStep() == 1) {
 		    if (p.getItemInHand() != null && p.getItemInHand().getType() == Material.DIAMOND_SWORD) {
-		    	if (e.getClickedBlock() != null && e.getClickedBlock().getType() == Material.PLAYER_HEAD) {
+		    	if (e.getClickedBlock() != null && e.getClickedBlock().getType() == Material.SKULL_ITEM) {
 		    		if (!setup.getGifts().contains(e.getClickedBlock())) {
 		    		    setup.getGifts().add(e.getClickedBlock());
-		    		    p.sendMessage(Messages.PREFIX + "�7 Gift was set. (�d"+setup.getGifts().size()+"�7)");
+		    		    p.sendMessage(Messages.PREFIX + "§7 Gift was set. (§d"+setup.getGifts().size()+"§7)");
 		    		} else {
-		    			p.sendMessage(Messages.PREFIX + "�c This gift has been already selected.");
+		    			p.sendMessage(Messages.PREFIX + "§c This gift has been already selected.");
 		    		}
 		    	}
 		    }
@@ -74,22 +74,22 @@ public class GameListener implements Listener {
 			if (g.getState() != GameState.IN_GAME) {
 				e.setCancelled(true);
 				if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-					if (g.getState() == GameState.WAITING && p.getInventory().getItemInHand().getType() == Material.RED_BED) {
+					if (g.getState() == GameState.WAITING && p.getInventory().getItemInHand().getType() == Material.BED) {
 						main.getManager().removePlayer(p, g, false, false);
 						p.sendMessage(Messages.PREFIX + " " + Messages.GAME_LEFT);
 					}
 				}
 			} else {
-				if (e.getClickedBlock() != null && e.getClickedBlock().getType() == Material.PLAYER_HEAD) {
+				if (e.getClickedBlock() != null && e.getClickedBlock().getType() == Material.SKULL_ITEM) {
 					if (g.getGifts().contains(e.getClickedBlock())) {
 					    g.restoreGifts().add((Skull) e.getClickedBlock().getState());
 					    e.getClickedBlock().setType(Material.AIR);
 					    p.sendMessage(Messages.GAME_YOU_STOLE.toString(p));
 					    g.getScores().put(p, g.getScores().get(p)+1);
-					    p.playSound(p.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1f, 1f);
+					    p.playSound(p.getLocation(), Sound.ARROW_HIT, 1f, 1f);
 					    Location gift = e.getClickedBlock().getLocation();
-					    p.spawnParticle(Particle.HEART, gift, 5, 0.2f, 0.2f, 0.2f);
-					    p.spawnParticle(Particle.NOTE, gift, 5, 0.2f, 0.2f, 0.2f);
+						p.getWorld().playEffect(p.getLocation(), Effect.HEART, Integer.MAX_VALUE);
+						p.getWorld().playEffect(p.getLocation(), Effect.NOTE, Integer.MAX_VALUE);
 					}
 				}
 			}
@@ -119,7 +119,7 @@ public class GameListener implements Listener {
 			}
 		} else {
 			e.setCancelled(true);
-			g.broadcast("�7" + p.getName() + "�f: " + e.getMessage());
+			g.broadcast("§7" + p.getName() + "§f: " + e.getMessage());
 		}
 	}
 	
@@ -244,7 +244,7 @@ public class GameListener implements Listener {
 				while (it.hasNext()) {
 					Location sign = it.next();
 					if (s.getWorld() == sign.getWorld() && s.distance(sign) == 0) {
-						p.sendMessage(Messages.PREFIX + " �cSign removed succefully!");
+						p.sendMessage(Messages.PREFIX + " §cSign removed succefully!");
 						String key = g.getID() + "," + s.getWorld().getName() + "," + s.getBlockX() + "," + s.getBlockY() + "," + s.getBlockZ();
 						List<String> keys = main.getGameDatabase().getStringList("Signs");
 						keys.remove(key);
@@ -351,9 +351,9 @@ public class GameListener implements Listener {
 						org.bukkit.material.Sign sign = (org.bukkit.material.Sign)l.getBlock().getState().getData();
 						Block attached = l.getBlock().getRelative(sign.getAttachedFace());
 						if (g.getState() == GameState.WAITING) {
-							attached.setType(Material.GREEN_STAINED_GLASS);
+							//attached.setType(Material.GREEN_STAINED_GLASS);
 						} else {
-							attached.setType(Material.RED_STAINED_GLASS);
+							//attached.setType(Material.RED_STAINED_GLASS);
 						}
 					}
 				    e.setLine(0, Messages.SIGN_FIRST.toString().replace("%prefix%", Messages.PREFIX.toString()).replace("%state%", g.getState().getState()).replace("%min%", g.getPlayers().size()+"").replace("%max%", 8+""));
@@ -364,13 +364,13 @@ public class GameListener implements Listener {
 					keys.add(line+","+l.getWorld().getName()+","+l.getBlockX()+","+l.getBlockY()+","+l.getBlockZ());
 					main.getGameDatabase().set("Signs", keys);
 					main.getGameDatabase().save();
-				    p.sendMessage(Messages.PREFIX + " �aSign created succefully!");
+				    p.sendMessage(Messages.PREFIX + " §aSign created succefully!");
 				} else {
 					e.setCancelled(true);
-					p.sendMessage(Messages.PREFIX + " �cThe game dosen't exist!");
+					p.sendMessage(Messages.PREFIX + " §cThe game dosen't exist!");
 				}
 			} catch (Exception ex) {
-				p.sendMessage(Messages.PREFIX + " �cInvalid game ID!");
+				p.sendMessage(Messages.PREFIX + " §cInvalid game ID!");
 				return;
 			}
 		}

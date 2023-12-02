@@ -68,8 +68,8 @@ public class GameManager {
 			ScoreboardStatus status = new ScoreboardStatus(p);
 			status.setTitle(Messages.SCOREBOARD_TITLE.toString());
 			g.getStatus().put(p.getUniqueId(), status);
-			p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1F, 1F);
-			p.getInventory().setItem(8, ItemBuilder.create(Material.RED_BED, 1, Messages.ITEM_LEFTGAME_NAME+" &8(&e"+Messages.ITEM_RIGHT_CLICK+"&8)", Messages.ITEM_LEFTGAME_LORE.toString()));
+			p.playSound(p.getLocation(), Sound.ENDERMAN_TELEPORT, 1F, 1F);
+			p.getInventory().setItem(8, ItemBuilder.create(Material.BED, 1, Messages.ITEM_LEFTGAME_NAME+" &8(&e"+Messages.ITEM_RIGHT_CLICK+"&8)", Messages.ITEM_LEFTGAME_LORE.toString()));
 			p.updateInventory();
 			g.broadcast(Messages.PREFIX + " " + Messages.GAME_JOIN.toString(p).replace("%name%", p.getName()).replace("%size%", String.valueOf(g.getPlayers().size())).replace("%maxsize%", String.valueOf(g.getMax())));
 			if (g.getPlayers().size() >= g.getMin()) {
@@ -94,7 +94,7 @@ public class GameManager {
 			}
 			g.getTop().clear();
 			g.getScores().put(p, score);
-			p.getInventory().setItem(8,ItemBuilder.create(Material.RED_BED, 1, Messages.ITEM_LEFTGAME_NAME + " &8(&e" + Messages.ITEM_RIGHT_CLICK + "&8)", Messages.ITEM_LEFTGAME_LORE.toString()));
+			p.getInventory().setItem(8,ItemBuilder.create(Material.BED, 1, Messages.ITEM_LEFTGAME_NAME + " &8(&e" + Messages.ITEM_RIGHT_CLICK + "&8)", Messages.ITEM_LEFTGAME_LORE.toString()));
 		} else {
 			if (!g.isStoping()) {
 				g.getPlayers().remove(p);
@@ -129,10 +129,10 @@ public class GameManager {
 		if (g.getState() == GameState.WAITING) {
 			status.updateLine(p, 7, "");
 			status.updateLine(p, 6, Messages.SCOREBOARD_LOBBY_ID.toString() + g.getID());
-			status.updateLine(p, 5, Messages.SCOREBOARD_LOBBY_PLAYERS + " �a"+g.getPlayers().size());
+			status.updateLine(p, 5, Messages.SCOREBOARD_LOBBY_PLAYERS + " §a"+g.getPlayers().size());
 			status.updateLine(p, 4, "");
 			if (g.isStarted()) {
-			  status.updateLine(p, 3, Messages.SCOREBOARD_LOBBY_GAME_START + " �c" + g.getTimer());
+			  status.updateLine(p, 3, Messages.SCOREBOARD_LOBBY_GAME_START + " §c" + g.getTimer());
 			} else {
 			  status.updateLine(p, 3, Messages.SCOREBOARD_LOBBY_WAITING.toString());
 			}

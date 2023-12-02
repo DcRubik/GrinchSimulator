@@ -8,7 +8,7 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.type.WallSign;
+import org.bukkit.block.Sign;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
@@ -40,10 +40,10 @@ public class Main extends JavaPlugin {
 	public void onEnable() {
 		getDataFolder().mkdirs();
 		ConsoleCommandSender console = getServer().getConsoleSender();
-		console.sendMessage("�a=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-		console.sendMessage("�aGrinchSimulator plugin is loading... ");
-		console.sendMessage("�a - Version: " + getDescription().getVersion());
-		console.sendMessage("�a - Author: DcRubik");
+		console.sendMessage("§a=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+		console.sendMessage("§aGrinchSimulator plugin is loading... ");
+		console.sendMessage("§a - Version: " + getDescription().getVersion());
+		console.sendMessage("§a - Author: DcRubik");
 		config = new Configuration(this, "config.yml", false);
 		cmdsStart = config.getStringList("Game.CommandsStart");
 		if (cmdsStart == null) {
@@ -52,7 +52,7 @@ public class Main extends JavaPlugin {
 		messages = new Configuration(this, "messages.yml", true);
 		for (Messages msg : Messages.values()) {
 			if (messages.getString("Messages." + msg.name()) == null) {
-				messages.set("Messages." + msg.name(), msg.toString().replace("�", "&"));
+				messages.set("Messages." + msg.name(), msg.toString().replace("§", "&"));
 			}
 		}
 		for (String name : messages.getConfigurationSection("Messages").getKeys(false)) {
@@ -77,7 +77,7 @@ public class Main extends JavaPlugin {
 					List<Block> gifts = GameUtils.getDeserializedBlocks(database.getStringList("Game." + ID + ".Gifts"));
 					manager.addGame(new Game(this, Integer.parseInt(ID), lobby, min, max, gifts));
 				} catch (Exception e) {
-					console.sendMessage("�c - Error loading the game with ID: " + ID);
+					console.sendMessage("§c - Error loading the game with ID: " + ID);
 				}
 			}
 		}
@@ -96,12 +96,12 @@ public class Main extends JavaPlugin {
 			if (l.getWorld() != null) {
 			    Game g = manager.getGame(id);
 			    Block block = l.getBlock();
-			    if (g != null && (block.getBlockData() instanceof WallSign)) {
+			    if (g != null && (block instanceof Sign)) {
 				    g.getSigns().add(l.getBlock().getLocation());
 			   }
 			}
 		}
-		console.sendMessage("�a - Loading songs...");
+		console.sendMessage("§a - Loading songs...");
 	    File folder = new File(getDataFolder().getPath() + "/Songs/");
 	    if (!folder.exists()) {
 	    	saveResource("Songs/0.nbs", true);
@@ -119,7 +119,7 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new GameListener(this), this);
 		getCommand("grinch").setExecutor(new Commands(this));
 		boolean enabled = config.getBoolean("MySQL.Enabled");
-		if (enabled) console.sendMessage("�a - Loading MySQL...");
+		if (enabled) console.sendMessage("§a - Loading MySQL...");
 		int queueAmount = config.getInt("MySQL.QueueAmount");
 		String host = config.getString("MySQL.Host");
 		String database = config.getString("MySQL.Database");
@@ -127,8 +127,8 @@ public class Main extends JavaPlugin {
 		String password = config.getString("MySQL.Password");
 		int port = config.getInt("MySQL.Port");
 		mysql = enabled ? new MySQL(this, host, database, username, password, port, queueAmount) : null;
-		console.sendMessage("�aGrinchSimulator has been loaded!");
-		console.sendMessage("�a=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+		console.sendMessage("§aGrinchSimulator has been loaded!");
+		console.sendMessage("§a=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
 	}
 	
 	@Override
