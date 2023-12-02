@@ -71,7 +71,7 @@ public class GameManager {
 			p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1F, 1F);
 			p.getInventory().setItem(8, ItemBuilder.create(Material.RED_BED, 1, Messages.ITEM_LEFTGAME_NAME+" &8(&e"+Messages.ITEM_RIGHT_CLICK+"&8)", Messages.ITEM_LEFTGAME_LORE.toString()));
 			p.updateInventory();
-			g.broadcast(Messages.PREFIX + " " + Messages.GAME_JOIN.toString().replace("%name%", p.getName()).replace("%size%", String.valueOf(g.getPlayers().size())).replace("%maxsize%", String.valueOf(g.getMax())));
+			g.broadcast(Messages.PREFIX + " " + Messages.GAME_JOIN.toString(p).replace("%name%", p.getName()).replace("%size%", String.valueOf(g.getPlayers().size())).replace("%maxsize%", String.valueOf(g.getMax())));
 			if (g.getPlayers().size() >= g.getMin()) {
 				g.start();
 			}
@@ -116,7 +116,7 @@ public class GameManager {
 			data.remove(p.getUniqueId()).restore(true);
 			updateSigns(g);
 			if (g.getState() == GameState.WAITING && !g.isStoping()) {
-				g.broadcast(Messages.PREFIX + " " + Messages.GAME_LEAVE.toString().replace("%name%", p.getName()).replace("%size%", String.valueOf(g.getPlayers().size())).replace("%maxsize%", String.valueOf(g.getMax())));
+				g.broadcast(Messages.PREFIX + " " + Messages.GAME_LEAVE.toString(p).replace("%name%", p.getName()).replace("%size%", String.valueOf(g.getPlayers().size())).replace("%maxsize%", String.valueOf(g.getMax())));
 			}
 			GameLeaveEvent e = new GameLeaveEvent(p);
 			main.getServer().getPluginManager().callEvent(e);
@@ -127,41 +127,41 @@ public class GameManager {
 	public void updateStatus(Game g, ScoreboardStatus status) {
 		Player p = status.getPlayer();
 		if (g.getState() == GameState.WAITING) {
-			status.updateLine(7, "");
-			status.updateLine(6, Messages.SCOREBOARD_LOBBY_ID.toString() + g.getID());
-			status.updateLine(5, Messages.SCOREBOARD_LOBBY_PLAYERS + " §a"+g.getPlayers().size());
-			status.updateLine(4, "");
+			status.updateLine(p, 7, "");
+			status.updateLine(p, 6, Messages.SCOREBOARD_LOBBY_ID.toString() + g.getID());
+			status.updateLine(p, 5, Messages.SCOREBOARD_LOBBY_PLAYERS + " ï¿½a"+g.getPlayers().size());
+			status.updateLine(p, 4, "");
 			if (g.isStarted()) {
-			  status.updateLine(3, Messages.SCOREBOARD_LOBBY_GAME_START + " §c" + g.getTimer());
+			  status.updateLine(p, 3, Messages.SCOREBOARD_LOBBY_GAME_START + " ï¿½c" + g.getTimer());
 			} else {
-			  status.updateLine(3, Messages.SCOREBOARD_LOBBY_WAITING.toString());
+			  status.updateLine(p, 3, Messages.SCOREBOARD_LOBBY_WAITING.toString());
 			}
-			status.updateLine(2, "");
-			status.updateLine(1, Messages.SCOREBOARD_LOBBY_SERVER.toString());
+			status.updateLine(p, 2, "");
+			status.updateLine(p, 1, Messages.SCOREBOARD_LOBBY_SERVER.toString());
 		} else {
 			int minutes = (g.getTimer()+1) % 3600;
 			if (g.getState() == GameState.END) {
 				minutes = 0;
 			}
 			String timer = ((minutes / 60 < 10) ? "0" : "") + minutes / 60 + ":" + ((minutes % 60 < 10) ? "0" : "") + minutes % 60;
-			status.updateLine(12, "");
-			status.updateLine(11, Messages.SCOREBOARD_GAME_TIME_LEFT.toString()+timer);
-			status.updateLine(10, Messages.SCOREBOARD_GAME_GIFTS_LEFT.toString()+(g.getGifts().size()-g.getAllGiftsStolen()));
-			status.updateLine(9, "");
-			status.updateLine(8, Messages.SCOREBOARD_GAME_GIFTS_STOLEN.toString()+g.getScores().get(p).intValue());
-			status.updateLine(7, Messages.SCOREBOARD_GAME_RANKING.toString()+g.getRank(p));
-			status.updateLine(6, "");
+			status.updateLine(p, 12, "");
+			status.updateLine(p, 11, Messages.SCOREBOARD_GAME_TIME_LEFT.toString()+timer);
+			status.updateLine(p, 10, Messages.SCOREBOARD_GAME_GIFTS_LEFT.toString()+(g.getGifts().size()-g.getAllGiftsStolen()));
+			status.updateLine(p, 9, "");
+			status.updateLine(p, 8, Messages.SCOREBOARD_GAME_GIFTS_STOLEN.toString()+g.getScores().get(p).intValue());
+			status.updateLine(p, 7, Messages.SCOREBOARD_GAME_RANKING.toString()+g.getRank(p));
+			status.updateLine(p, 6, "");
 			if (g.getTop().size() > 0) {
-				status.updateLine(5,Messages.SCOREBOARD_TOP.toString().replace("%place%", "1").replace("%player%", fix(g.getTop().get(0).getName())).replace("%gifts%", "" + g.getScores().get(g.getTop().get(0)).intValue()));
+				status.updateLine(p,5,Messages.SCOREBOARD_TOP.toString(p).replace("%place%", "1").replace("%player%", fix(g.getTop().get(0).getName())).replace("%gifts%", "" + g.getScores().get(g.getTop().get(0)).intValue()));
 			}
 			if (g.getTop().size() > 1) {
-				status.updateLine(4, Messages.SCOREBOARD_TOP.toString().replace("%place%", "2").replace("%player%", fix(g.getTop().get(1).getName())).replace("%gifts%", "" + g.getScores().get(g.getTop().get(1)).intValue()));
+				status.updateLine(p, 4, Messages.SCOREBOARD_TOP.toString(p).replace("%place%", "2").replace("%player%", fix(g.getTop().get(1).getName())).replace("%gifts%", "" + g.getScores().get(g.getTop().get(1)).intValue()));
 			}
 			if (g.getTop().size() > 2) {
-				status.updateLine(3, Messages.SCOREBOARD_TOP.toString().replace("%place%", "3").replace("%player%", fix(g.getTop().get(2).getName())).replace("%gifts%", "" + g.getScores().get(g.getTop().get(2)).intValue()));
+				status.updateLine(p, 3, Messages.SCOREBOARD_TOP.toString(p).replace("%place%", "3").replace("%player%", fix(g.getTop().get(2).getName())).replace("%gifts%", "" + g.getScores().get(g.getTop().get(2)).intValue()));
 			}
-			status.updateLine(2, "");
-			status.updateLine(1, Messages.SCOREBOARD_LOBBY_SERVER.toString());
+			status.updateLine(p, 2, "");
+			status.updateLine(p, 1, Messages.SCOREBOARD_LOBBY_SERVER.toString(p));
 		}
 	}
 	

@@ -262,28 +262,28 @@ public class Game {
 							    main.getServer().dispatchCommand(Bukkit.getConsoleSender(), command.replace("%first%", p.getName()));
 							}
 						}
-						p.sendTitle(Messages.GAME_WON.toString(), Messages.TITLE_FIRST.toString(), 0, 100, 0);
+						p.sendTitle(Messages.GAME_WON.toString(p), Messages.TITLE_FIRST.toString(p), 0, 100, 0);
 					} else if (p == top.get(1)) {
 						for (String command : commands) {
 							if (command.contains("%second%")) {
 							    main.getServer().dispatchCommand(Bukkit.getConsoleSender(), command.replace("%second%", p.getName()));
 							}
 						}
-						p.sendTitle(Messages.GAME_OVER.toString(), Messages.TITLE_SECOND.toString(), 0, 100, 0);
+						p.sendTitle(Messages.GAME_OVER.toString(), Messages.TITLE_SECOND.toString(p), 0, 100, 0);
 					} else if (top.size() > 2 && p == top.get(2)) {
 						for (String command : commands) {
 							if (command.contains("%third%")) {
 							    main.getServer().dispatchCommand(Bukkit.getConsoleSender(), command.replace("%third%", p.getName()));
 							}
 						}
-						p.sendTitle(Messages.GAME_OVER.toString(), Messages.TITLE_THIRD.toString(), 0, 100, 0);
+						p.sendTitle(Messages.GAME_OVER.toString(), Messages.TITLE_THIRD.toString(p), 0, 100, 0);
 					} else {
 						for (String command : commands) {
 							if (command.contains("%other%")) {
 							    main.getServer().dispatchCommand(Bukkit.getConsoleSender(), command.replace("%other%", p.getName()));
 							}
 						}
-						p.sendTitle(Messages.GAME_OVER.toString(), Messages.TITLE_OVER.toString().replace("%rank%", ""+getRank(p)), 0, 100, 0);
+						p.sendTitle(Messages.GAME_OVER.toString(p), Messages.TITLE_OVER.toString(p).replace("%rank%", ""+getRank(p)), 0, 100, 0);
 					}
 				    MySQL mysql = main.getMySQL();
 				    if (mysql != null) {
@@ -293,13 +293,13 @@ public class Game {
 					p.sendMessage(Messages.GAME_NAME.toString());
 					p.sendMessage("");
 					if (top.size() > 0) {
-						p.sendMessage(Messages.GAME_TOP.toString().replace("%place%", "1").replace("%player%", top.get(0).getName()).replace("%gifts%", ""+scores.get(top.get(0)).intValue()));
+						p.sendMessage(Messages.GAME_TOP.toString(p).replace("%place%", "1").replace("%player%", top.get(0).getName()).replace("%gifts%", ""+scores.get(top.get(0)).intValue()));
 					}
 					if (top.size() > 1) {
-						p.sendMessage(Messages.GAME_TOP.toString().replace("%place%", "2").replace("%player%", top.get(1).getName()).replace("%gifts%", ""+scores.get(top.get(1)).intValue()));
+						p.sendMessage(Messages.GAME_TOP.toString(p).replace("%place%", "2").replace("%player%", top.get(1).getName()).replace("%gifts%", ""+scores.get(top.get(1)).intValue()));
 					}
 					if (top.size() > 2) {
-						p.sendMessage(Messages.GAME_TOP.toString().replace("%place%", "3").replace("%player%", top.get(2).getName()).replace("%gifts%", ""+scores.get(top.get(2)).intValue()));
+						p.sendMessage(Messages.GAME_TOP.toString(p).replace("%place%", "3").replace("%player%", top.get(2).getName()).replace("%gifts%", ""+scores.get(top.get(2)).intValue()));
 					}
 					p.sendMessage("");
 					p.sendMessage("§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
@@ -323,9 +323,9 @@ public class Game {
 					p.setWalkSpeed(0.35f);
 					p.getInventory().setItem(0, new ItemStack(Material.SNOWBALL, main.getConfiguration().getInt("Game.Snowballs")));
 					p.sendMessage("§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-					p.sendMessage(Messages.GAME_NAME.toString());
+					p.sendMessage(Messages.GAME_NAME.toString(p));
 					p.sendMessage("");
-					String[] message = Messages.GAME_START_MESSAGE.toString().split("#");
+					String[] message = Messages.GAME_START_MESSAGE.toString(p).split("#");
 					for (String m : message) {
 						p.sendMessage("➢ "+m);
 					}
@@ -343,9 +343,9 @@ public class Game {
 			  for (Player p : players) {
 				 if (timer <= 5) {
 				    p.playSound(p.getEyeLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0F, 0.5F);
-				    p.sendMessage(Messages.PREFIX + " " + Messages.GAME_START.toString().replace("%timer%", timer + ""));
+				    p.sendMessage(Messages.PREFIX + " " + Messages.GAME_START.toString(p).replace("%timer%", timer + ""));
 				 } else if (timer % 10 == 0) {
-				    p.sendMessage(Messages.PREFIX + " " + Messages.GAME_START.toString().replace("%timer%", timer + ""));
+				    p.sendMessage(Messages.PREFIX + " " + Messages.GAME_START.toString(p).replace("%timer%", timer + ""));
 				 }
 			  }
 		   }

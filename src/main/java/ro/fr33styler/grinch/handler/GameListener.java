@@ -61,9 +61,9 @@ public class GameListener implements Listener {
 		    	if (e.getClickedBlock() != null && e.getClickedBlock().getType() == Material.PLAYER_HEAD) {
 		    		if (!setup.getGifts().contains(e.getClickedBlock())) {
 		    		    setup.getGifts().add(e.getClickedBlock());
-		    		    p.sendMessage(Messages.PREFIX + "§7 Gift was set. (§d"+setup.getGifts().size()+"§7)");
+		    		    p.sendMessage(Messages.PREFIX + "ï¿½7 Gift was set. (ï¿½d"+setup.getGifts().size()+"ï¿½7)");
 		    		} else {
-		    			p.sendMessage(Messages.PREFIX + "§c This gift has been already selected.");
+		    			p.sendMessage(Messages.PREFIX + "ï¿½c This gift has been already selected.");
 		    		}
 		    	}
 		    }
@@ -84,7 +84,7 @@ public class GameListener implements Listener {
 					if (g.getGifts().contains(e.getClickedBlock())) {
 					    g.restoreGifts().add((Skull) e.getClickedBlock().getState());
 					    e.getClickedBlock().setType(Material.AIR);
-					    p.sendMessage(Messages.GAME_YOU_STOLE.toString());
+					    p.sendMessage(Messages.GAME_YOU_STOLE.toString(p));
 					    g.getScores().put(p, g.getScores().get(p)+1);
 					    p.playSound(p.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1f, 1f);
 					    Location gift = e.getClickedBlock().getLocation();
@@ -119,7 +119,7 @@ public class GameListener implements Listener {
 			}
 		} else {
 			e.setCancelled(true);
-			g.broadcast("§7" + p.getName() + "§f: " + e.getMessage());
+			g.broadcast("ï¿½7" + p.getName() + "ï¿½f: " + e.getMessage());
 		}
 	}
 	
@@ -196,7 +196,7 @@ public class GameListener implements Listener {
 			String cmd = split[0];
 			if (cmd.equalsIgnoreCase("/leave") || cmd.equalsIgnoreCase("/quit")) {
 				e.setCancelled(true);
-				p.sendMessage(Messages.PREFIX + " " + Messages.GAME_LEFT.toString());
+				p.sendMessage(Messages.PREFIX + " " + Messages.GAME_LEFT.toString(p));
 				if (main.getManager().isBungeeMode()) {
 					main.getManager().removePlayer(p, g, true, false);
 				} else {
@@ -204,7 +204,7 @@ public class GameListener implements Listener {
 				}
 			} else if (!cmd.equalsIgnoreCase("/gs") && !cmd.equalsIgnoreCase("/grinch") && !GameUtils.containsIgnoreCase(main.getConfiguration().getStringList("Game.Whitelist"), cmd)) {
 				e.setCancelled(true);
-				p.sendMessage(Messages.PREFIX + " " + Messages.RESTRICTED_COMMAND.toString());
+				p.sendMessage(Messages.PREFIX + " " + Messages.RESTRICTED_COMMAND.toString(p));
 			}
 		}
 	}
@@ -244,7 +244,7 @@ public class GameListener implements Listener {
 				while (it.hasNext()) {
 					Location sign = it.next();
 					if (s.getWorld() == sign.getWorld() && s.distance(sign) == 0) {
-						p.sendMessage(Messages.PREFIX + " §cSign removed succefully!");
+						p.sendMessage(Messages.PREFIX + " ï¿½cSign removed succefully!");
 						String key = g.getID() + "," + s.getWorld().getName() + "," + s.getBlockX() + "," + s.getBlockY() + "," + s.getBlockZ();
 						List<String> keys = main.getGameDatabase().getStringList("Signs");
 						keys.remove(key);
@@ -364,13 +364,13 @@ public class GameListener implements Listener {
 					keys.add(line+","+l.getWorld().getName()+","+l.getBlockX()+","+l.getBlockY()+","+l.getBlockZ());
 					main.getGameDatabase().set("Signs", keys);
 					main.getGameDatabase().save();
-				    p.sendMessage(Messages.PREFIX + " §aSign created succefully!");
+				    p.sendMessage(Messages.PREFIX + " ï¿½aSign created succefully!");
 				} else {
 					e.setCancelled(true);
-					p.sendMessage(Messages.PREFIX + " §cThe game dosen't exist!");
+					p.sendMessage(Messages.PREFIX + " ï¿½cThe game dosen't exist!");
 				}
 			} catch (Exception ex) {
-				p.sendMessage(Messages.PREFIX + " §cInvalid game ID!");
+				p.sendMessage(Messages.PREFIX + " ï¿½cInvalid game ID!");
 				return;
 			}
 		}

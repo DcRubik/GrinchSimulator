@@ -2,6 +2,7 @@ package ro.fr33styler.grinch.scoreboard;
 
 import java.util.HashMap;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -19,7 +20,7 @@ public class ScoreboardStatus {
 		board = Bukkit.getScoreboardManager().getNewScoreboard();
 		obj = board.registerNewObjective("status", "dummy");
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-		entries = new HashMap<Integer, ScoreboardLine>();
+		entries = new HashMap<>();
 		p.setScoreboard(board);
 	}
     
@@ -40,19 +41,19 @@ public class ScoreboardStatus {
 		entries.clear();
 	}
 	
-	public void updateLine(int line, String text) {
+	public void updateLine(OfflinePlayer player, int line, String text) {
 		if (entries.get(line) != null) {
-			entries.get(line).update(text);
+			entries.get(line).update(player, text);
 		} else {
-			entries.put(line, new ScoreboardLine(board, obj, text, line, line));
+			entries.put(line, new ScoreboardLine(player, board, obj, text, line, line));
 		}
 	}
 	
-	public void updateLine(int line, int score, String text) {
+	public void updateLine(OfflinePlayer player, int line, int score, String text) {
 		if (entries.get(line) != null) {
-			entries.get(line).update(text);
+			entries.get(line).update(player, text);
 		} else {
-			entries.put(line, new ScoreboardLine(board, obj, text, line, score));
+			entries.put(line, new ScoreboardLine(player, board, obj, text, line, score));
 		}
 	}
 }

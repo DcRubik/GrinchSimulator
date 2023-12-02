@@ -1,5 +1,10 @@
 package ro.fr33styler.grinch;
 
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
+import ro.fr33styler.grinch.util.ChatUtil;
+
 public enum Messages {
 	
 	PREFIX("§a▏"),
@@ -60,7 +65,11 @@ public enum Messages {
 	}
 	
 	public String toString() {
-		return msg;
+		return ChatUtil.parseColor(Bukkit.getOfflinePlayer("user"), msg);
+	}
+
+	public String toString(Player player) {
+		return ChatUtil.parseColor(player, msg);
 	}
 	
 	public static Messages getEnum(String name) {
