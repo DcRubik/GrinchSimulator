@@ -49,7 +49,7 @@ public class CommandCreate implements Command {
 			if (main.getManager().getGame(id) == null) {
 				if (main.getSetups().get(p) == null) {
 					main.getSetups().put(p, new GameSetup(id, min, max));
-					p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1F, 1F);
+					p.playSound(p.getLocation(), Sound.LEVEL_UP, 1F, 1F);
 					for (int i = 0; i < 20; i++) {
 						p.sendMessage("");
 					}
