@@ -45,7 +45,7 @@ public enum Messages {
 	SCOREBOARD_LOBBY_PLAYERS("Players:"),
 	SCOREBOARD_LOBBY_GAME_START("Game starts in:"),
 	SCOREBOARD_LOBBY_WAITING("Waiting..."),
-	SCOREBOARD_LOBBY_SERVER("§ewww.spigotmc.org"),
+	SCOREBOARD_LOBBY_SERVER("§ewww.hyblixel.net"),
 	SCOREBOARD_GAME_RANKING("Ranking: §a"),
 	SCOREBOARD_GAME_GIFTS_STOLEN("Gifts Stolen: §a"),
 	SCOREBOARD_GAME_GIFTS_LEFT("Gifts Left: §a"),
